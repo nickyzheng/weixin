@@ -12,6 +12,7 @@ from django.shortcuts import render_to_response
 
 # Create your views here.
 def home(req):
+    print '---> in home <---'
     print req
     if req.method == 'GET':
         if 'signature' in req.GET:
