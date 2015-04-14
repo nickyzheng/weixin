@@ -50,7 +50,7 @@ def home(req):
 
 
 def test(req):
-    print '--->'
+    print '---> in test'
     print req.body
     now = datetime.datetime.now()
     #assert False
