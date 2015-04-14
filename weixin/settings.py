@@ -71,6 +71,7 @@ TEMPLATES = [
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), '../wxapp/templates').replace('\\','/'),
 )
+print os.path.join(os.path.dirname(__file__), '../wxapp/templates').replace('\\','/')
 
 WSGI_APPLICATION = 'weixin.wsgi.application'
 
