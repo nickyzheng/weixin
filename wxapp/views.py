@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response
 # Create your views here.
 def home(req):
     print '---> in home <---'
-    print req.body.read()
+    print req.body
     if req.method == 'GET':
         if 'signature' in req.GET:
             signature = req.GET['signature']
@@ -35,6 +35,8 @@ def home(req):
         return
 
 def test(req):
+    print '--->'
+    print req.body
     now = datetime.datetime.now()
     #assert False
     return render_to_response('now.template.html', {'current_date': now})
