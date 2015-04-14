@@ -12,33 +12,33 @@ from django.shortcuts import render_to_response
 
 # Create your views here.
 def home(req):
-    try:
-        print '---> in home <---'
-        print req.body
-        if req.method == 'GET':
-            if 'signature' in req.GET:
-                signature = req.GET['signature']
-                echostr = req.GET['echostr']
-                timestamp = req.GET['timestamp']
-                nonce = req.GET['nonce']
+    print '---> in home'
+    print req.get_host()
+    print req.get_full_path()
+    print req.body
+    print '---> after print'
+    if req.method == 'GET':
+        if 'signature' in req.GET:
+            signature = req.GET['signature']
+            echostr = req.GET['echostr']
+            timestamp = req.GET['timestamp']
+            nonce = req.GET['nonce']
 
-                token = '1stloop'
-                list = [token, timestamp, nonce]
-                list.sort()
-                sha1 = hashlib.sha1()
-                map(sha1.update, list)
-                hashcode = sha1.hexdigest()
+            token = '1stloop'
+            list = [token, timestamp, nonce]
+            list.sort()
+            sha1 = hashlib.sha1()
+            map(sha1.update, list)
+            hashcode = sha1.hexdigest()
 
-                if hashcode == signature:
-                    return HttpResponse(echostr) 
-            return HttpResponse('end of get') 
-        if req.method == 'POST':
-            print '---> in POST'
-            print req
-            return HttpResponse('post') 
-    except Exception as e:
-        print '---> in e'
-        print e
+            if hashcode == signature:
+                return HttpResponse(echostr) 
+        return HttpResponse('end of get') 
+    if req.method == 'POST':
+        print '---> in POST'
+        print req
+        return HttpResponse('post') 
+
 
 def test(req):
     print '--->'
