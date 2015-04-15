@@ -48,7 +48,9 @@ def home(req):
         msgType = xml.find("MsgType").text
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
-        print content, msgType, fromUser, toUser
+        print '---> print items:'
+        #print content, msgType, fromUser, toUser
+        print '---> end of print items'
         return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': content})
         
 
