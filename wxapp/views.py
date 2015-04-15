@@ -19,34 +19,29 @@ def home(req):
     print 'body: ', req.body
     print 'method: ', req.method
     print '---> after print'
-    try:
-        if req.method == 'GET':
-            if 'signature' in req.GET:
-                signature = req.GET['signature']
-                echostr = req.GET['echostr']
-                timestamp = req.GET['timestamp']
-                nonce = req.GET['nonce']
 
-                token = '1stloop'
-                list = [token, timestamp, nonce]
-                list.sort()
-                sha1 = hashlib.sha1()
-                map(sha1.update, list)
-                hashcode = sha1.hexdigest()
+    if req.method == 'GET':
+        if 'signature' in req.GET:
+            signature = req.GET['signature']
+            echostr = req.GET['echostr']
+            timestamp = req.GET['timestamp']
+            nonce = req.GET['nonce']
 
-                if hashcode == signature:
-                    return HttpResponse(echostr) 
-            return HttpResponse('end of get') 
-        if req.method == 'POST':
-            print '---> in POST'
-            print req
-            return HttpResponse('post') 
+            token = '1stloop'
+            list = [token, timestamp, nonce]
+            list.sort()
+            sha1 = hashlib.sha1()
+            map(sha1.update, list)
+            hashcode = sha1.hexdigest()
+
+            if hashcode == signature:
+                return HttpResponse(echostr) 
+        return HttpResponse('end of get') 
+    if req.method == 'POST':
+        print '---> in POST'
+
+        return HttpResponse('post') 
         
-    except:
-        tb = traceback.format_exc()
-        print '---> in tb'
-        print tb
-        return HttpResponse(tb)
 
 
 def test(req):
