@@ -55,7 +55,7 @@ ROOT_URLCONF = 'weixin.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(os.path.dirname(__file__), '../wxapp/templates').replace('\\','/'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
