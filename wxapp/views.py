@@ -13,6 +13,7 @@ import datetime
 from django.shortcuts import render_to_response
 import traceback
 import logging
+import urlparse
 
 ####### END of TEST ########
 
@@ -20,13 +21,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 def home(req):
-    print '---> in home'
-    print 'remote_addr: ', get_client_ip(req)
-    print 'host: ', req.get_host()
-    print 'path: ', req.get_full_path()
-    print 'body: ', req.body
-    print 'method: ', req.method
-    print '---> after print'
     request_message = '\n'
     request_message += get_client_ip(req) + ', '
     request_message += req.method + ', '
@@ -41,6 +35,10 @@ def home(req):
         timestamp = req.GET['timestamp']
         nonce = req.GET['nonce']
 
+        print '--> signature: ', signature
+        print '--> timestamp: ', timestamp
+        print '--> nonce: ', nonce
+
         token = '1stloop'
         list = [token, timestamp, nonce]
         list.sort()
@@ -52,6 +50,18 @@ def home(req):
             return HttpResponse(echostr) 
         return HttpResponse('end of get') 
     if req.method == 'POST':
+        url = req.get_full_path()
+        parsed = urlparse.urlparse(url)
+        signature = urlparse.parse_qs(parsed.query)['signature']
+        timestamp = urlparse.parse_qs(parsed.query)['timestamp']
+        nonce = urlparse.parse_qs(parsed.query)['nonce']
+
+        print '--> signature: ', signature
+        print '--> timestamp: ', timestamp
+        print '--> nonce: ', nonce
+
+        check_signature(timestamp, nonce, signature)
+
         str_xml = req.body
         xml = etree.fromstring(str_xml)
         msgType = xml.find("MsgType").text
@@ -73,6 +83,19 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+def check_signature(timestamp, nonce, signature):
+    token = '1stloop'
+    list = [token, timestamp, nonce]
+    list.sort()
+    sha1 = hashlib.sha1()
+    map(sha1.update, list)
+    hashcode = sha1.hexdigest()
+    if hashcode == signature:
+        return True
+    else:
+        return False
+
 
 def test(req):
     print '---> in test'
