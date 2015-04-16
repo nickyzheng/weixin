@@ -48,7 +48,8 @@ def home(req):
         msgType = xml.find("MsgType").text
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
-        return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': content})
+        now = datetime.datetime.now()
+        return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': now})
         
 
 
