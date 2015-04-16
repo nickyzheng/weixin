@@ -39,28 +39,27 @@ def home(req):
         print '--> timestamp: ', timestamp
         print '--> nonce: ', nonce
 
-        token = '1stloop'
-        list = [token, timestamp, nonce]
-        list.sort()
-        sha1 = hashlib.sha1()
-        map(sha1.update, list)
-        hashcode = sha1.hexdigest()
+        # token = '1stloop'
+        # list = [token, timestamp, nonce]
+        # list.sort()
+        # sha1 = hashlib.sha1()
+        # map(sha1.update, list)
+        # hashcode = sha1.hexdigest()
 
-        if hashcode == signature:
+        # if hashcode == signature:
+
+        if check_signature(timestamp, nonce, signature):
             return HttpResponse(echostr) 
         return HttpResponse('end of get') 
     if req.method == 'POST':
         url = req.get_full_path()
         parsed = urlparse.urlparse(url)
-        signature = urlparse.parse_qs(parsed.query)['signature']
-        timestamp = urlparse.parse_qs(parsed.query)['timestamp']
-        nonce = urlparse.parse_qs(parsed.query)['nonce']
+        signature = urlparse.parse_qs(parsed.query)['signature'][0]
+        timestamp = urlparse.parse_qs(parsed.query)['timestamp'][0]
+        nonce = urlparse.parse_qs(parsed.query)['nonce'][0]
 
-        print '--> signature: ', signature
-        print '--> timestamp: ', timestamp
-        print '--> nonce: ', nonce
-
-        check_signature(timestamp, nonce, signature)
+        if not check_signature(timestamp, nonce, signature):
+            return ('Check signature failed.')
 
         str_xml = req.body
         xml = etree.fromstring(str_xml)
@@ -92,8 +91,10 @@ def check_signature(timestamp, nonce, signature):
     map(sha1.update, list)
     hashcode = sha1.hexdigest()
     if hashcode == signature:
+        logger.info('Check signature success.')
         return True
     else:
+        logger.info('Check signature fail.')
         return False
 
 
