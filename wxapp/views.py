@@ -12,10 +12,13 @@ import datetime
 #from django.template import Context
 from django.shortcuts import render_to_response
 import traceback
+import logging
 
 ####### END of TEST ########
 
 # Create your views here.
+logger = logging.getLogger(__name__)
+
 def home(req):
     print '---> in home'
     print 'remote_addr: ', get_client_ip(req)
@@ -24,6 +27,13 @@ def home(req):
     print 'body: ', req.body
     print 'method: ', req.method
     print '---> after print'
+    request_message = '\n'
+    request_message += get_client_ip(req) + ', '
+    request_message += req.method + ', '
+    request_message += req.get_full_path() + ', '
+    logger.info(request_message)
+    logger.info(req.body)
+
 
     if req.method == 'GET' and 'signature' in req.GET:
         signature = req.GET['signature']
@@ -69,6 +79,9 @@ def test(req):
     print req.body
     now = datetime.datetime.now()
     #assert False
+    
+    logger.info('aaa')
+    logger.error('bbb')
     return render_to_response('now.template.html', {'current_date': now})
 
 ###
