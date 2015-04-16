@@ -18,6 +18,7 @@ import traceback
 # Create your views here.
 def home(req):
     print '---> in home'
+    print 'remote_addr: ', get_client_ip(req)
     print 'host: ', req.get_host()
     print 'path: ', req.get_full_path()
     print 'body: ', req.body
@@ -55,7 +56,13 @@ def home(req):
         toUser = xml.find("ToUserName").text
         return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
         
-
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 def test(req):
     print '---> in test'
