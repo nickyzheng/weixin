@@ -41,15 +41,19 @@ def home(req):
             return HttpResponse(echostr) 
         return HttpResponse('end of get') 
     if req.method == 'POST':
-        print '---> in POST'
         str_xml = req.body
         xml = etree.fromstring(str_xml)
-        content = xml.find("Content").text
         msgType = xml.find("MsgType").text
+        if msgType == 'text':
+            content = xml.find("Content").text
+            reply_content = datetime.datetime.now()
+        if msgType == 'image':
+            picUrl = xml.find("PicUrl").text
+            reply_content = picUrl
+
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
-        now = datetime.datetime.now()
-        return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': now})
+        return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
         
 
 
