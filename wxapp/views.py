@@ -14,6 +14,7 @@ from django.shortcuts import render_to_response
 import traceback
 import logging
 import urlparse
+import urllib
 
 ####### END of TEST ########
 
@@ -28,25 +29,11 @@ def home(req):
     logger.info(request_message)
     logger.info(req.body)
 
-
     if req.method == 'GET' and 'signature' in req.GET:
         signature = req.GET['signature']
         echostr = req.GET['echostr']
         timestamp = req.GET['timestamp']
         nonce = req.GET['nonce']
-
-        print '--> signature: ', signature
-        print '--> timestamp: ', timestamp
-        print '--> nonce: ', nonce
-
-        # token = '1stloop'
-        # list = [token, timestamp, nonce]
-        # list.sort()
-        # sha1 = hashlib.sha1()
-        # map(sha1.update, list)
-        # hashcode = sha1.hexdigest()
-
-        # if hashcode == signature:
 
         if check_signature(timestamp, nonce, signature):
             return HttpResponse(echostr) 
@@ -57,9 +44,8 @@ def home(req):
         signature = urlparse.parse_qs(parsed.query)['signature'][0]
         timestamp = urlparse.parse_qs(parsed.query)['timestamp'][0]
         nonce = urlparse.parse_qs(parsed.query)['nonce'][0]
-
         if not check_signature(timestamp, nonce, signature):
-            return ('Check signature failed.')
+            return HttpResponse('Check signature failed.') 
 
         str_xml = req.body
         xml = etree.fromstring(str_xml)
@@ -68,8 +54,9 @@ def home(req):
             content = xml.find("Content").text
             reply_content = datetime.datetime.now()
         if msgType == 'image':
-            picUrl = xml.find("PicUrl").text
-            reply_content = picUrl
+            PicUrl = xml.find("PicUrl").text
+            urllib.urlretrieve(PicUrl, 'picture.jpg')
+            reply_content = PicUrl
 
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
