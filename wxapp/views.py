@@ -96,3 +96,4 @@ def test(req):
     return render_to_response('now.template.html', {'current_date': now})
 
 ###
+###
