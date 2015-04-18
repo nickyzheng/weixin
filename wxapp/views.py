@@ -55,7 +55,7 @@ def home(req):
             reply_content = datetime.datetime.now()
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
-            urllib.urlretrieve(PicUrl, 'picture.jpg')
+            urllib.urlretrieve(PicUrl, 'static/upload/picture.jpg')
             reply_content = PicUrl
 
         fromUser = xml.find("FromUserName").text
