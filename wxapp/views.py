@@ -70,7 +70,7 @@ def home(req):
                 if command[0] == 'showpic':
                     reply_content = str(datetime.datetime.now()) + ' ' + content
             else:       
-                reply_content = 'No match!'
+                reply_content = 'No match!\nNo match!'
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
