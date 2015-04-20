@@ -28,6 +28,14 @@ from wxapp.models import clothes
 # Create your views here.
 logger = logging.getLogger(__name__)
 
+image_text_reply_content = u'查询结果：\n'
+image_text_reply_content += 'name: ' + %s + '\n'
+image_text_reply_content += 'category: ' + %s + '\n'
+image_text_reply_content += 'season: ' + %s + '\n'
+image_text_reply_content += 'tag: ' + %s + '\n'
+image_text_reply_content += u'选择次数: ' + %s
+image_url_prefix = 'http://1stloop.com/static/upload/'
+
 def home(req):
     request_message = '\n'
     request_message += get_client_ip(req) + ', '
@@ -67,13 +75,14 @@ def home(req):
                 command = content.split()
                 if command[0] == 'show':
                     c = clothes.objects.get(name = command[1])
-                    reply_content = u'查询结果：\n'
-                    reply_content += 'name: ' + c.name + '\n'
-                    reply_content += 'category: ' + c.category + '\n'
-                    reply_content += 'season: ' + c.season + '\n'
-                    reply_content += 'tag: ' + c.tag + '\n'
-                    reply_content += u'选择次数: ' + str(c.choose_count)
-                    image_url_prefix = 'http://1stloop.com/static/upload/'
+                    # reply_content = u'查询结果：\n'
+                    # reply_content += 'name: ' + c.name + '\n'
+                    # reply_content += 'category: ' + c.category + '\n'
+                    # reply_content += 'season: ' + c.season + '\n'
+                    # reply_content += 'tag: ' + c.tag + '\n'
+                    # reply_content += u'选择次数: ' + str(c.choose_count)
+                    # image_url_prefix = 'http://1stloop.com/static/upload/'
+                    reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
                 if command[0] == 'showall':
