@@ -64,11 +64,11 @@ def home(req):
             if p.match(content):
                 command = content.split()
                 if command[0] == 'show':
-                    reply_content = datetime.datetime.now() + ' ' + content
+                    reply_content = str(datetime.datetime.now()) + ' ' + content
                 if command[0] == 'showall':
-                    reply_content = datetime.datetime.now() + ' ' + content
+                    reply_content = str(datetime.datetime.now()) + ' ' + content
                 if command[0] == 'showpic':
-                    reply_content = datetime.datetime.now() + ' ' + content
+                    reply_content = str(datetime.datetime.now()) + ' ' + content
             else:       
                 reply_content = 'No match!'
         if msgType == 'image':
