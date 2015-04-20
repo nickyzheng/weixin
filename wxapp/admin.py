@@ -3,7 +3,7 @@ from django.contrib import admin
 from wxapp.models import clothes
 # Register your models here.
 
+class clothesAdmin(admin.ModelAdmin):
+	list_display = ('name', 'category', 'season', 'tag', 'choose_count', 'image_filename')
 
-# Register your models here.
-
-admin.site.register(clothes)
+admin.site.register(clothes, clothesAdmin)

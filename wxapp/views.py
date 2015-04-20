@@ -19,6 +19,7 @@ import urlparse
 import urllib
 import random
 import string
+import re
 
 from wxapp.models import clothes
 
@@ -58,7 +59,18 @@ def home(req):
         msgType = xml.find("MsgType").text
         if msgType == 'text':
             content = xml.find("Content").text
-            reply_content = datetime.datetime.now()
+            pattern_show = r'^show'
+            p = re.compile(pattern_show)
+            if p.match(content):
+                command = content.split()
+                if command[0] == 'show':
+                    reply_content = datetime.datetime.now() + ' ' + content
+                if command[0] == 'showall':
+                    reply_content = datetime.datetime.now() + ' ' + content
+                if command[0] == 'showpic':
+                    reply_content = datetime.datetime.now() + ' ' + content
+            else:       
+                reply_content = 'No match!'
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
