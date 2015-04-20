@@ -58,7 +58,7 @@ def home(req):
         xml = etree.fromstring(str_xml)
         msgType = xml.find("MsgType").text
         if msgType == 'text':
-            content = xml.find("Content").text
+            content = xml.find("Content").text.lower()
             pattern_show = r'^show'
             p = re.compile(pattern_show)
             if p.match(content):
