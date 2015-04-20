@@ -88,7 +88,7 @@ def home(req):
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
             new_filename = new_filename
-            urllib.urlretrieve(PicUrl, new_filename)
+            urllib.urlretrieve(PicUrl, '/static/upload/' + new_filename)
             max_num = '1'
             if clothes.objects.all():
                 max_num = str(clothes.objects.all().order_by('-id')[0].id + 1)
