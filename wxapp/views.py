@@ -65,8 +65,12 @@ def home(req):
                 command = content.split()
                 if command[0] == 'show':
                     c = clothes.objects.get(name = command[1])
-
-                    reply_content = str(datetime.datetime.now()) + ' ' + c.name
+                    reply_content = u'查询结果：\n'
+                    reply_content += 'name: ' + c.name + '\n'
+                    reply_content += 'category: ' + c.category + '\n'
+                    reply_content += 'season: ' + c.season + '\n'
+                    reply_content += 'tag: ' + c.tag + '\n'
+                    reply_content += '选择次数: ' + c.choose_count + '\n'
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.all()
                     reply_content = u'所有的衣服：\n'
