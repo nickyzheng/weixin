@@ -72,7 +72,7 @@ def home(req):
                     reply_content += 'season: ' + c.season + '\n'
                     reply_content += 'tag: ' + c.tag + '\n'
                     reply_content += u'选择次数: ' + str(c.choose_count)
-                    image_url_prefix = 'http://1stloop.com/'
+                    image_url_prefix = 'http://1stloop.com/static/upload/'
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
                 if command[0] == 'showall':
@@ -87,9 +87,12 @@ def home(req):
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
-            new_filename = 'static/upload/' + new_filename
+            new_filename = new_filename
             urllib.urlretrieve(PicUrl, new_filename)
-            new_name = '新衣服' + str(clothes.objects.all().order_by('-id')[0].id + 1)
+            max_num = 1
+            if clothes.objects.all():
+                max_num = str(clothes.objects.all().order_by('-id')[0].id + 1)
+            new_name = '新衣服' + max_num
             new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename)
             reply_content = new_name + ' 已保存'
         return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
