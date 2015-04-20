@@ -95,7 +95,7 @@ def home(req):
             p = re.compile(pattern_rename)
             if p.match(content):
                 command = content.split()
-                c = clothes.objects.get(name = u'新衣服11')
+                c = clothes.objects.get(name = command[1])
                 c.name = command[2]
                 c.save()
             reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
@@ -109,7 +109,7 @@ def home(req):
                 for com in command:
                     print com
                 if command[1] == 'category' or command[1] == 'cat':
-                    c = clothes.objects.get(name = command[2])
+                    c = clothes.objects.get(name = u'新衣服11')
                     c.category = command[3]
                     c.save()
                 reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
