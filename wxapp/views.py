@@ -107,14 +107,14 @@ def home(req):
             if p.match(content):
                 command = content.split()
                 for com in command:
-                    print com
+                    logger.info(com)
                 if command[1] == 'category' or command[1] == 'cat':
-                    c = clothes.objects.get(name = u'新衣服11')
+                    c = clothes.objects.get(name = 'command[2]')
                     c.category = command[3]
                     c.save()
-                reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
-                picUrl = image_url_prefix + c.image_filename
-                return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
+                    reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
+                    picUrl = image_url_prefix + c.image_filename
+                    return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
