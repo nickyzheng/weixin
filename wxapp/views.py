@@ -28,13 +28,7 @@ from wxapp.models import clothes
 # Create your views here.
 logger = logging.getLogger(__name__)
 
-image_text_reply_content = u'查询结果：\n'
-image_text_reply_content += 'name: %s \n'
-image_text_reply_content += 'category: %s \n'
-image_text_reply_content += 'season: %s \n'
-image_text_reply_content += 'tag: %s \n'
-image_text_reply_content += u'选择次数: %s'
-image_url_prefix = 'http://1stloop.com/static/upload/'
+
 
 def home(req):
     request_message = '\n'
@@ -54,6 +48,14 @@ def home(req):
             return HttpResponse(echostr) 
         return HttpResponse('end of get') 
     if req.method == 'POST':
+        image_text_reply_content = u'查询结果：\n'
+        image_text_reply_content += 'name: %s \n'
+        image_text_reply_content += 'category: %s \n'
+        image_text_reply_content += 'season: %s \n'
+        image_text_reply_content += 'tag: %s \n'
+        image_text_reply_content += u'选择次数: %s'
+        image_url_prefix = 'http://1stloop.com/static/upload/'
+
         url = req.get_full_path()
         parsed = urlparse.urlparse(url)
         signature = urlparse.parse_qs(parsed.query)['signature'][0]
