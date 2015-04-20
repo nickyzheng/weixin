@@ -145,6 +145,7 @@ def home(req):
                 return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
         else:
             reply_content = u'命令错误。\nrename 给衣服起个名字\nshow: 显示衣服\nshowall 列出全部衣服\nset cat 设置类型\nset sea 设置季节\ntoday 今天穿什么\ndel 删除\nchoose 今天选这件'
+            return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
 
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
