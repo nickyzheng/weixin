@@ -133,6 +133,17 @@ def home(req):
                 reply_content = name + u' 已删除'
                 return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
 
+            pattern_choose = r'^choose'
+            p = re.compile(pattern_choose)
+            if p.match(content):
+                command = content.split()
+                c = clothes.objects.get(name = command[1])
+                c.choose_count += 1
+                c.save()
+                reply_content = set_image_text_reply_content(c)
+                picUrl = image_url_prefix + c.image_filename
+                return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
+
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
