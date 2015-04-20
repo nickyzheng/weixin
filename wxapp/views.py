@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from django.http import HttpResponse
 import hashlib
@@ -15,6 +17,10 @@ import traceback
 import logging
 import urlparse
 import urllib
+import random
+import string
+
+from wxapp.models import clothes
 
 ####### END of TEST ########
 
@@ -55,8 +61,13 @@ def home(req):
             reply_content = datetime.datetime.now()
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
-            urllib.urlretrieve(PicUrl, 'static/upload/picture.jpg')
-            reply_content = PicUrl
+            new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
+            new_filename = 'static/upload/' + new_filename
+            urllib.urlretrieve(PicUrl, new_filename)
+            new_name = '新衣服' + str(clothes.objects.all().order_by('-id')[0].id + 1)
+            new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename)
+
+            reply_content = new_name + ' 已保存'
 
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
@@ -93,6 +104,15 @@ def test(req):
     
     logger.info('aaa')
     logger.error('bbb')
+
+    new_name = '新衣服'
+
+    new_name += str(clothes.objects.all().order_by('-id')[0].id + 1)
+
+    new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
+
+    new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename)
+
     return render_to_response('now.template.html', {'current_date': now})
 
 ###
