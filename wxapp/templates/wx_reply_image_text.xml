@@ -1,0 +1,15 @@
+<xml>
+	<ToUserName><![CDATA[{{toUser}}]]></ToUserName>
+	<FromUserName><![CDATA[{{fromUser}}]]></FromUserName>
+	<CreateTime>{{createTime}}</CreateTime>
+	<MsgType><![CDATA[news]]></MsgType>
+	<ArticleCount>1</ArticleCount>
+	<Articles>
+		<item>
+			<Title><![CDATA[Clothes]]></Title> 
+			<Description><![CDATA[{{content}}]]></Description>
+			<PicUrl><![CDATA[{{picUrl}}]]></PicUrl>
+			<Url><![CDATA[{{picUrl}}]]></Url>
+		</item>
+	</Articles>
+</xml> 

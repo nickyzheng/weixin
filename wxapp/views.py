@@ -53,7 +53,8 @@ def home(req):
         nonce = urlparse.parse_qs(parsed.query)['nonce'][0]
         if not check_signature(timestamp, nonce, signature):
             return HttpResponse('Check signature failed.') 
-
+        fromUser = xml.find("FromUserName").text
+        toUser = xml.find("ToUserName").text
         str_xml = req.body
         xml = etree.fromstring(str_xml)
         msgType = xml.find("MsgType").text
@@ -70,7 +71,10 @@ def home(req):
                     reply_content += 'category: ' + c.category + '\n'
                     reply_content += 'season: ' + c.season + '\n'
                     reply_content += 'tag: ' + c.tag + '\n'
-                    reply_content += u'选择次数: ' + str(c.choose_count) + '\n'
+                    reply_content += u'选择次数: ' + str(c.choose_count)
+                    image_url_prefix = 'http://1stloop.com/static/upload/'
+                    picUrl = image_url_prefix + c.image_filename
+                    return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content}, 'picUrl': picUrl)
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.all()
                     reply_content = u'所有的衣服：\n'
@@ -87,11 +91,7 @@ def home(req):
             urllib.urlretrieve(PicUrl, new_filename)
             new_name = '新衣服' + str(clothes.objects.all().order_by('-id')[0].id + 1)
             new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename)
-
             reply_content = new_name + ' 已保存'
-
-        fromUser = xml.find("FromUserName").text
-        toUser = xml.find("ToUserName").text
         return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
         
 def get_client_ip(request):
