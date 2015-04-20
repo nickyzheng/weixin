@@ -74,7 +74,7 @@ def home(req):
                     reply_content += u'选择次数: ' + str(c.choose_count)
                     image_url_prefix = 'http://1stloop.com/static/upload/'
                     picUrl = image_url_prefix + c.image_filename
-                    return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content}, 'picUrl': picUrl)
+                    return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.all()
                     reply_content = u'所有的衣服：\n'
