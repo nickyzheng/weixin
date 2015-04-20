@@ -183,6 +183,12 @@ def check_signature(timestamp, nonce, signature):
         return False
 
 def set_image_text_reply_content(c):
+    image_text_reply_content = u'查询结果：\n'
+    image_text_reply_content += 'name: %s \n'
+    image_text_reply_content += 'category: %s \n'
+    image_text_reply_content += 'season: %s \n'
+    image_text_reply_content += 'tag: %s \n'
+    image_text_reply_content += u'选择次数: %s'
     if c.category and not c.category.isspace():   
         category = clothes.CATEGORY_LIST[int(c.category)][1]
     else:
