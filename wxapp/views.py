@@ -70,7 +70,7 @@ def home(req):
                     reply_content += 'category: ' + c.category + '\n'
                     reply_content += 'season: ' + c.season + '\n'
                     reply_content += 'tag: ' + c.tag + '\n'
-                    reply_content += '选择次数: ' + c.choose_count + '\n'
+                    reply_content += u'选择次数: ' + str(c.choose_count) + '\n'
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.all()
                     reply_content = u'所有的衣服：\n'
