@@ -121,7 +121,7 @@ def home(req):
                 c = clothes.objects.order_by('?')[0]
                 reply_content = set_image_text_reply_content(c)
                 picUrl = image_url_prefix + c.image_filename
-            return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
+                return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
             pattern_del = r'^del'
             p = re.compile(pattern_del)
