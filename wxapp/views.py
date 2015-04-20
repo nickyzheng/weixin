@@ -91,7 +91,7 @@ def home(req):
             else:       
                 reply_content = 'No match!'
 
-            pattern_rename = r'rename'
+            pattern_rename = r'^rename'
             p = re.compile(pattern_rename)
             if p.match(content):
                 command = content.split()
@@ -101,6 +101,18 @@ def home(req):
             reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
             picUrl = image_url_prefix + c.image_filename
             return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
+
+            pattern_set = r'^set'
+            p = re.compile(pattern_set)
+            if p.match(content):
+                command = content.split()
+                if command[1] == 'category' or command[1] == 'c':
+                    c = clothes.objects.get(name = command[2])
+                    c.category = command[3]
+                    c.save()
+                reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
+                picUrl = image_url_prefix + c.image_filename
+                return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
@@ -113,7 +125,7 @@ def home(req):
             new_name = '新衣服' + max_num
             new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename)
             reply_content = new_name + ' 已保存'
-        return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
+            return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
         
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
