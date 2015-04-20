@@ -83,6 +83,8 @@ def home(req):
                     # reply_content += u'选择次数: ' + str(c.choose_count)
                     # image_url_prefix = 'http://1stloop.com/static/upload/'
                     reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
+                    print image_text_reply_content
+                    print image_url_prefix
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
                 if command[0] == 'showall':
@@ -158,13 +160,7 @@ def test(req):
     logger.info('aaa')
     logger.error('bbb')
 
-    new_name = '新衣服'
-
-    new_name += str(clothes.objects.all().order_by('-id')[0].id + 1)
-
-    new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
-
-    new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename)
+    print image_url_prefix
 
     return render_to_response('now.template.html', {'current_date': now})
 
