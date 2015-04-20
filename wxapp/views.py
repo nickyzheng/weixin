@@ -67,6 +67,7 @@ def home(req):
                     reply_content = str(datetime.datetime.now()) + ' ' + content
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.all()
+                    reply_content = ''
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                 if command[0] == 'showpic':
