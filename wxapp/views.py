@@ -118,7 +118,8 @@ def home(req):
             pattern_today = r'^today'
             p = re.compile(pattern_today)
             if p.match(content):
-                c = clothes.objects.order_by('?')[0]
+                command = content.split()
+                c = clothes.objects.filter(category = command[1], season = command[2]).order_by('?')[0]
                 reply_content = set_image_text_reply_content(c)
                 picUrl = image_url_prefix + c.image_filename
                 return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
