@@ -112,7 +112,7 @@ def home(req):
                     c = clothes.objects.get(name = command[2])
                     c.category = command[3]
                     c.save()
-                    reply_content = image_text_reply_content % (c.name, CATEGORY_LIST[c.category][1], c.season, c.tag, str(c.choose_count))
+                    reply_content = image_text_reply_content % (c.name, clothes.CATEGORY_LIST[c.category][1], c.season, c.tag, str(c.choose_count))
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
