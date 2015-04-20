@@ -59,3 +59,5 @@ target/
 gitpush.sh
 gitpull.sh
 .DS_Store
+*.sqlite3
+*.sqlite3.bak
