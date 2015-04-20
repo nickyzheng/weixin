@@ -98,9 +98,9 @@ def home(req):
                 c = clothes.objects.get(name = command[1])
                 c.name = command[2]
                 c.save()
-            reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
-            picUrl = image_url_prefix + c.image_filename
-            return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
+                reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
+                picUrl = image_url_prefix + c.image_filename
+                return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
             pattern_set = r'^set'
             p = re.compile(pattern_set)
@@ -112,8 +112,7 @@ def home(req):
                     c = clothes.objects.get(name = 'command[2]')
                     c.category = command[3]
                     c.save()
-                    # reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
-                    reply_content = c.name
+                    reply_content = image_text_reply_content % (c.name, c.category, c.season, c.tag, str(c.choose_count))
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
