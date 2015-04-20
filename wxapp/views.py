@@ -127,19 +127,24 @@ def home(req):
                     c.season = command[3]
                     c.save()
 
-
-
-                if c.category and not c.category.isspace():   
-                    category = clothes.CATEGORY_LIST[int(c.category)][1]
-                else:
-                    category = 'not set'
-                if c.season and not c.season.isspace():
-                    season = clothes.SEASON_LIST[int(c.season)][1]
-                else:
-                    season = 'not set'
-                reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
+                # if c.category and not c.category.isspace():   
+                #     category = clothes.CATEGORY_LIST[int(c.category)][1]
+                # else:
+                #     category = 'not set'
+                # if c.season and not c.season.isspace():
+                #     season = clothes.SEASON_LIST[int(c.season)][1]
+                # else:
+                #     season = 'not set'
+                # reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
+                reply_content = set_image_text_reply_content(c)
                 picUrl = image_url_prefix + c.image_filename
                 return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
+
+            pattern_today = r'^today'
+            p = re.compile(pattern_today)
+            if p.match(content):
+                c = clothes.objects.order_by('?')[0]
+
 
 
         if msgType == 'image':
@@ -177,6 +182,17 @@ def check_signature(timestamp, nonce, signature):
         logger.info('Check signature fail.')
         return False
 
+def set_image_text_reply_content(c):
+    if c.category and not c.category.isspace():   
+        category = clothes.CATEGORY_LIST[int(c.category)][1]
+    else:
+        category = 'not set'
+    if c.season and not c.season.isspace():
+        season = clothes.SEASON_LIST[int(c.season)][1]
+    else:
+        season = 'not set'
+    reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
+    return reply_content
 
 def test(req):
     print '---> in test'
