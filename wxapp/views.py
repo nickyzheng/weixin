@@ -143,9 +143,9 @@ def home(req):
                 reply_content = set_image_text_reply_content(c)
                 picUrl = image_url_prefix + c.image_filename
                 return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
-                
+
             # nothing match, display menu        
-            reply_content = u'命令错误。\nrename 给衣服起个名字\nshow: 显示衣服\nshowall 列出全部衣服\nset cat 设置类型\nset sea 设置季节\ntoday 今天穿什么\ndel 删除\nchoose 今天选这件'
+            reply_content = u'你输入的命令有误！\nrename 给衣服起个名字\nshow 显示衣服\nshowall 列出全部衣服\nset cat 设置类型\n  0 - business\n  1 - business casual\n  2 - casual\n  3 - sport\nset sea 设置季节\n  0 - spring and autumn\n  1 - summer\n  2 - winter\ntoday 今天穿什么\ndel 删除\nchoose 今天选这件'
             return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
 
         if msgType == 'image':
