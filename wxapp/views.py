@@ -64,16 +64,18 @@ def home(req):
             if p.match(content):
                 command = content.split()
                 if command[0] == 'show':
-                    reply_content = str(datetime.datetime.now()) + ' ' + content
+                    c = clothes.objects.get(name = command[1])
+
+                    reply_content = str(datetime.datetime.now()) + ' ' + c.name
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.all()
-                    reply_content = u'所有的衣服：'
+                    reply_content = u'所有的衣服：\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                 if command[0] == 'showpic':
                     reply_content = str(datetime.datetime.now()) + ' ' + content
             else:       
-                reply_content = 'No match!\nNo match!'
+                reply_content = 'No match!'
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
