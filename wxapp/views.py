@@ -77,15 +77,16 @@ def home(req):
                 command = content.split()
                 if command[0] == 'show':
                     c = clothes.objects.get(name = command[1])
-                    if c.category and not c.category.isspace():   
-                        category = clothes.CATEGORY_LIST[int(c.category)][1]
-                    else:
-                        category = 'not set'
-                    if c.season and not c.season.isspace():
-                        season = clothes.SEASON_LIST[int(c.season)][1]
-                    else:
-                        season = 'not set'
-                    reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
+                    # if c.category and not c.category.isspace():   
+                    #     category = clothes.CATEGORY_LIST[int(c.category)][1]
+                    # else:
+                    #     category = 'not set'
+                    # if c.season and not c.season.isspace():
+                    #     season = clothes.SEASON_LIST[int(c.season)][1]
+                    # else:
+                    #     season = 'not set'
+                    # reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
+                    reply_content = set_image_text_reply_content(c)
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
                 if command[0] == 'showall':
@@ -102,15 +103,16 @@ def home(req):
                 c = clothes.objects.get(name = command[1])
                 c.name = command[2]
                 c.save()
-                if c.category and not c.category.isspace():   
-                    category = clothes.CATEGORY_LIST[int(c.category)][1]
-                else:
-                    category = 'not set'
-                if c.season and not c.season.isspace():
-                    season = clothes.SEASON_LIST[int(c.season)][1]
-                else:
-                    season = 'not set'
-                reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
+                # if c.category and not c.category.isspace():   
+                #     category = clothes.CATEGORY_LIST[int(c.category)][1]
+                # else:
+                #     category = 'not set'
+                # if c.season and not c.season.isspace():
+                #     season = clothes.SEASON_LIST[int(c.season)][1]
+                # else:
+                #     season = 'not set'
+                # reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
+                reply_content = set_image_text_reply_content(c)
                 picUrl = image_url_prefix + c.image_filename
                 return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
