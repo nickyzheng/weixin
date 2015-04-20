@@ -106,7 +106,9 @@ def home(req):
             p = re.compile(pattern_set)
             if p.match(content):
                 command = content.split()
-                if command[1] == 'category' or command[1] == 'c':
+                for com in command:
+                    print com
+                if command[1] == 'category' or command[1] == 'cat':
                     c = clothes.objects.get(name = command[2])
                     c.category = command[3]
                     c.save()
