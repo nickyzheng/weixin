@@ -53,10 +53,10 @@ def home(req):
         nonce = urlparse.parse_qs(parsed.query)['nonce'][0]
         if not check_signature(timestamp, nonce, signature):
             return HttpResponse('Check signature failed.') 
-        fromUser = xml.find("FromUserName").text
-        toUser = xml.find("ToUserName").text
         str_xml = req.body
         xml = etree.fromstring(str_xml)
+        fromUser = xml.find("FromUserName").text
+        toUser = xml.find("ToUserName").text
         msgType = xml.find("MsgType").text
         if msgType == 'text':
             content = xml.find("Content").text.lower()
