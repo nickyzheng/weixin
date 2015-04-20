@@ -123,6 +123,16 @@ def home(req):
                 picUrl = image_url_prefix + c.image_filename
             return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
 
+            pattern_del = r'^del'
+            p = re.compile(pattern_del)
+            if p.match(content):
+                command = content.split()
+                c = clothes.objects.get(name = command[1])
+                name = c.name
+                c.delete()
+                reply_content = name + u' 已删除'
+                return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
+
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
