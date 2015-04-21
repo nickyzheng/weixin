@@ -5,7 +5,7 @@ from wxapp.models import user
 # Register your models here.
 
 class clothesAdmin(admin.ModelAdmin):
-	list_display = ('id', 'name', 'category', 'season', 'tag', 'choose_count', 'image_filename')
+	list_display = ('id', 'name', 'category', 'season', 'tag', 'choose_count', 'image_filename', 'user_id')
 
 class userAdmin(admin.ModelAdmin):
 	list_display = ('id', 'nickname', 'openid')
