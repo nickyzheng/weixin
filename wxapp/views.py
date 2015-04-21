@@ -29,7 +29,7 @@ from wxapp.models import user
 # Create your views here.
 logger = logging.getLogger(__name__)
 
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def home(req):
     request_message = '\n'
@@ -145,7 +145,7 @@ def home(req):
                 name = c.name
                 filename = c.image_filename
                 c.delete()
-                os.remove('static/upload/' + filename)
+                os.remove(BASE_DIR + '/static/upload/' + filename)
                 reply_content = name + u' 已删除'
                 return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
 
@@ -168,7 +168,7 @@ def home(req):
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'
             new_filename = new_filename
-            urllib.urlretrieve(PicUrl, 'static/upload/' + new_filename)
+            urllib.urlretrieve(PicUrl, BASE_DIR + '/static/upload/' + new_filename)
             max_num = '1'
             if clothes.objects.all():
                 max_num = str(clothes.objects.all().order_by('-id')[0].id + 1)
