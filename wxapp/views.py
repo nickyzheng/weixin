@@ -92,6 +92,12 @@ def home(req):
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                     return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
+                if command[0] == 'showsea':
+                    all_clothes = clothes.objects.filter(season = command[1])
+                    reply_content = u'本类型衣服有：\n'
+                    for c in all_clothes:
+                        reply_content += c.name + '\n'
+                    return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
 
             pattern_rename = r'^rename'
             p = re.compile(pattern_rename)
