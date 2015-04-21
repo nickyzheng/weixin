@@ -82,19 +82,19 @@ def home(req):
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.all()
-                    reply_content = u'所有的衣服：\n'
+                    reply_content = u'共有 ' + str(all_clothes.count()) + u'件衣服：\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                     return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
                 if command[0] == 'showcat':
                     all_clothes = clothes.objects.filter(category = command[1])
-                    reply_content = u'本季衣服有：\n'
+                    reply_content = u'本季衣服共有：' + str(all_clothes.count()) + u'件\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                     return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
                 if command[0] == 'showsea':
                     all_clothes = clothes.objects.filter(season = command[1])
-                    reply_content = u'本类型衣服有：\n'
+                    reply_content = u'本类型衣服共有：' + str(all_clothes.count()) + u'件\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                     return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
