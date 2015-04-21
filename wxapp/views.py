@@ -196,7 +196,7 @@ def set_image_text_reply_content(c):
     else:
         category = 'not set'
     if c.season and not c.season.isspace():
-        season = clothes.SEASON_LIST[int(c.season - 1)][1]
+        season = clothes.SEASON_LIST[int(c.season) - 1][1]
     else:
         season = 'not set'
     reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
