@@ -171,7 +171,8 @@ def home(req):
             if clothes.objects.all():
                 max_num = str(clothes.objects.all().order_by('-id')[0].id + 1)
             new_name = '新衣服' + max_num
-            new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename, user__openid = fromUser)
+            this_user = user.objects.get(openid = fromUser)
+            new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename, user_id = this_user.id)
             reply_content = new_name + '已保存'
             return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
         
