@@ -22,6 +22,7 @@ import string
 import re
 
 from wxapp.models import clothes
+from wxapp.models import user
 
 ####### END of TEST ########
 
@@ -76,24 +77,24 @@ def home(req):
             if p.match(content):
                 command = content.split()
                 if command[0] == 'show':
-                    c = clothes.objects.get(name = command[1])
+                    c = clothes.objects.get(name = command[1], user__openid = fromUser)
                     reply_content = set_image_text_reply_content(c)
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
                 if command[0] == 'showall':
-                    all_clothes = clothes.objects.all()
+                    all_clothes = clothes.objects.filter(user__openid = fromUser)
                     reply_content = u'共有 ' + str(all_clothes.count()) + u' 件衣服：\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                     return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
                 if command[0] == 'showcat':
-                    all_clothes = clothes.objects.filter(category = command[1])
+                    all_clothes = clothes.objects.filter(category = command[1], user__openid = fromUser)
                     reply_content = u'本季衣服共有 ' + str(all_clothes.count()) + u' 件\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
                     return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
                 if command[0] == 'showsea':
-                    all_clothes = clothes.objects.filter(season = command[1])
+                    all_clothes = clothes.objects.filter(season = command[1], user__openid = fromUser)
                     reply_content = u'本类型衣服共有 ' + str(all_clothes.count()) + u' 件\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
@@ -103,7 +104,7 @@ def home(req):
             p = re.compile(pattern_rename)
             if p.match(content):
                 command = content.split()
-                c = clothes.objects.get(name = command[1])
+                c = clothes.objects.get(name = command[1], user__openid = fromUser)
                 c.name = command[2]
                 c.save()
                 reply_content = set_image_text_reply_content(c)
@@ -115,11 +116,11 @@ def home(req):
             if p.match(content):
                 command = content.split()
                 if command[1] == 'category' or command[1] == 'cat':
-                    c = clothes.objects.get(name = command[2])
+                    c = clothes.objects.get(name = command[2], user__openid = fromUser)
                     c.category = command[3]
                     c.save()
                 if command[1] == 'season' or command[1] == 'sea':
-                    c = clothes.objects.get(name = command[2])
+                    c = clothes.objects.get(name = command[2], user__openid = fromUser)
                     c.season = command[3]
                     c.save()
 
@@ -131,7 +132,7 @@ def home(req):
             p = re.compile(pattern_today)
             if p.match(content):
                 command = content.split()
-                c = clothes.objects.filter(category = command[1], season = command[2]).order_by('?')[0]
+                c = clothes.objects.filter(category = command[1], season = command[2], user__openid = fromUser).order_by('?')[0]
                 reply_content = set_image_text_reply_content(c)
                 picUrl = image_url_prefix + c.image_filename
                 return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
@@ -140,7 +141,7 @@ def home(req):
             p = re.compile(pattern_del)
             if p.match(content):
                 command = content.split()
-                c = clothes.objects.get(name = command[1])
+                c = clothes.objects.get(name = command[1], user__openid = fromUser)
                 name = c.name
                 c.delete()
                 reply_content = name + u' 已删除'
@@ -150,7 +151,7 @@ def home(req):
             p = re.compile(pattern_choose)
             if p.match(content):
                 command = content.split()
-                c = clothes.objects.get(name = command[1])
+                c = clothes.objects.get(name = command[1], user__openid = fromUser)
                 c.choose_count += 1
                 c.save()
                 reply_content = set_image_text_reply_content(c)
@@ -170,7 +171,7 @@ def home(req):
             if clothes.objects.all():
                 max_num = str(clothes.objects.all().order_by('-id')[0].id + 1)
             new_name = '新衣服' + max_num
-            new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename)
+            new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename, user__openid = fromUser)
             reply_content = new_name + '已保存'
             return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
         

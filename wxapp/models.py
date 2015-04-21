@@ -20,6 +20,14 @@ class clothes(models.Model):
 	choose_count = models.SmallIntegerField(default = 0) # times the clothes has been choosed
 	add_date = models.DateField(auto_now_add = True, blank = True)
 	image_filename = models.CharField(max_length = 20, blank = True)
+	user = models.ForeignKey('user')
 
 	def __unicode__(self):
 		return self.name
+
+class user(models.Model):
+	nickname = models.CharField(max_length = 30, blank = True)
+	openid = models.CharField(max_length = 50, blank = True)
+
+	def __unicode__(self):
+		return self.nickname
