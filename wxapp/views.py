@@ -143,7 +143,9 @@ def home(req):
                 command = content.split()
                 c = clothes.objects.get(name = command[1], user__openid = fromUser)
                 name = c.name
+                filename = c.image_filename
                 c.delete()
+                os.remove('static/upload/' + filename)
                 reply_content = name + u' 已删除'
                 return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
 
