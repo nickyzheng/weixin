@@ -87,7 +87,7 @@ def home(req):
                         reply_content += c.name + '\n'
                     return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
                 if command[0] == 'showcat':
-                    c = clothes.objects.filter(category = command[1])
+                    all_clothes = clothes.objects.filter(category = command[1])
                     reply_content = u'本季衣服有：\n'
                     for c in all_clothes:
                         reply_content += c.name + '\n'
