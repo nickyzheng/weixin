@@ -226,6 +226,7 @@ def clothes_detail(req):
         id = req.GET['id']
         c = clothes.objects.get(id = id)
         return render_to_response('clothes_detail.html', {'clothes': c})
+    
 
 def test(req):
     print '---> in test'
