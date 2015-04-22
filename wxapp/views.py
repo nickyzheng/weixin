@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import hashlib
 import lxml
 import time
@@ -237,7 +237,7 @@ def clothes_detail(req, clothes_id):
         c.category = category
         c.season = season
         c.save()
-        return render_to_response('clothes_detail.html', {'clothes': c})
+        return HttpResponseRedirect('/detail/%s' % (c.id))
 
 def test(req):
     print '---> in test'
