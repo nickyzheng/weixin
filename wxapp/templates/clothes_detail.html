@@ -60,10 +60,10 @@
           <form>
             <div class="form-group">
               <select class="selectpicker">
-                <option value="1" {% if clothes.category == 1 %} selected="selected" {% endif %} >Business</option>
-                <option value="2" {% if clothes.category == 2 %} selected="selected" {% endif %} >Business casual</option>
-                <option value="3" {% if clothes.category == 3 %} selected="selected" {% endif %} >Casual</option>
-                <option value="4" {% if clothes.category == 4 %} selected="selected" {% endif %} >Sport</option>
+                <option value="1" {% if clothes.category == '1' %} selected="selected" {% endif %} >Business</option>
+                <option value="2" {% if clothes.category == '2' %} selected="selected" {% endif %} >Business casual</option>
+                <option value="3" {% if clothes.category == '3' %} selected="selected" {% endif %} >Casual</option>
+                <option value="4" {% if clothes.category == '4' %} selected="selected" {% endif %} >Sport</option>
               </select>
               <select class="selectpicker">
                 <option value="1" selected="selected">Sprint/Autumn</option>
