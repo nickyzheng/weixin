@@ -177,7 +177,7 @@ def home(req):
             new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename, user_id = this_user.id)
             reply_content = new_name + '已保存'
             picUrl = image_url_prefix + new_clothes.image_filename
-            Url = 'http://1stloop.com/detail?id=%s' %s (new_clothes.id)
+            Url = 'http://1stloop.com/detail?id=%s' % (new_clothes.id)
             return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl, 'Url': Url})
             
         
