@@ -228,7 +228,7 @@ def test(req):
     logger.error('bbb')
 
 
-    return render_to_response('starter-template.html', {'current_date': now})
+    return render_to_response('starter-template.html', {'image_url': 'http://1stloop.com/static/upload/frroo.jpg'})
 
 ###
 ###
