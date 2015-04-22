@@ -228,10 +228,11 @@ def clothes_detail(req, saveid = 0):
         c = clothes.objects.get(id = id)
         return render_to_response('clothes_detail.html', {'clothes': c})
     if req.method == 'POST':
+        id = req.POST.get('id')
         category = req.POST.get('category')
         season = req.POST.get('season')
         name = req.POST.get('name')
-        c = clothes.objects.get(id = saveid)
+        c = clothes.objects.get(id = id)
         c.name = name
         c.category = category
         c.season = season
