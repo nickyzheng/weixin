@@ -222,10 +222,10 @@ def set_image_text_reply_content(c):
     reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
     return reply_content
 
-def clothes_detail(req, id):
+def clothes_detail(req, clothes_id):
     if req.method == 'GET':
         # id = req.GET['id']
-        c = clothes.objects.get(id = id)
+        c = clothes.objects.get(id = clothes_id)
         return render_to_response('clothes_detail.html', {'clothes': c})
     if req.method == 'POST':
         id = req.POST.get('id')
