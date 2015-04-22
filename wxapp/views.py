@@ -227,9 +227,8 @@ def test(req):
     logger.info('aaa')
     logger.error('bbb')
 
-    print image_url_prefix
 
-    return render_to_response('now.template.html', {'current_date': now})
+    return render_to_response('starter-template.html', {'current_date': now})
 
 ###
 ###
