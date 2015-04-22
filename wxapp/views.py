@@ -77,7 +77,7 @@ def home(req):
             if p.match(content):
                 command = content.split()
                 if command[0] == 'show':
-                    c = clothes.objects.get(name = command[1], user__openid = fromUser)
+                    c = clothes.objects.filter(name__startswith = command[1], user__openid = fromUser)[0]
                     reply_content = set_image_text_reply_content(c)
                     picUrl = image_url_prefix + c.image_filename
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl})
