@@ -8,6 +8,6 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^wx', 'wxapp.views.home'),
-    url(r'^detail/', 'wxapp.views.clothes_detail'),
+    url(r'^detail/(\d+)$', 'wxapp.views.clothes_detail'),
     url(r'^test/', 'wxapp.views.test'),
 ]
