@@ -59,20 +59,20 @@
         <p >
           <form method="post" action="/detail/{{clothes.id}}">
             <div class="form-group">
-              <select class="selectpicker" id="category">
+              <select class="selectpicker" name="category">
                 <option value="1" {% if clothes.category == '1' %} selected="selected" {% endif %} >Business</option>
                 <option value="2" {% if clothes.category == '2' %} selected="selected" {% endif %} >Business casual</option>
                 <option value="3" {% if clothes.category == '3' %} selected="selected" {% endif %} >Casual</option>
                 <option value="4" {% if clothes.category == '4' %} selected="selected" {% endif %} >Sport</option>
               </select>
-              <select class="selectpicker" id="season">
+              <select class="selectpicker" name="season">
                 <option value="1" {% if clothes.category == '1' %} selected="selected" {% endif %} >Sprint/Autumn</option>
                 <option value="2" {% if clothes.category == '2' %} selected="selected" {% endif %} >Summer</option>
                 <option value="3" {% if clothes.category == '3' %} selected="selected" {% endif %} >Winter</option>
               </select>
             </div>
             <div class="form-group">
-              <input type="text" id="name" value="{{clothes.name}}">
+              <input type="text" name="name" value="{{clothes.name}}">
               <button type="submit" class="btn btn-default">Submit</button>
             </div>
           </form>
