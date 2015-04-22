@@ -80,7 +80,7 @@ def home(req):
                     c = clothes.objects.filter(name__startswith = command[1], user__openid = fromUser)[0]
                     reply_content = set_image_text_reply_content(c)
                     picUrl = image_url_prefix + c.image_filename
-                    Url = 'http://1stloop.com/detail?id=%s' % (c.id)
+                    Url = 'http://1stloop.com/detail/%s' % (c.id)
                     return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl, 'Url': Url})
                 if command[0] == 'showall':
                     all_clothes = clothes.objects.filter(user__openid = fromUser)
