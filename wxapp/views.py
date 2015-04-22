@@ -225,14 +225,20 @@ def set_image_text_reply_content(c):
 def clothes_detail(req, clothes_id):
     if req.method == 'GET':
         # id = req.GET['id']
-        print '---> clothes_id: ', clothes_id
+        print '---> clothes_id:', clothes_id
         c = clothes.objects.get(id = clothes_id)
         return render_to_response('clothes_detail.html', {'clothes': c})
     if req.method == 'POST':
         # id = req.POST.get('id')
+        print '---> in post'
+        print '---> clothes_id:', clothes_id
         category = req.POST.get('category')
         season = req.POST.get('season')
         name = req.POST.get('name')
+        print '---> category:', category
+        print '---> season:', season
+        print '---> name:', name
+        print 
         c = clothes.objects.get(id = clothes_id)
         c.name = name
         c.category = category
