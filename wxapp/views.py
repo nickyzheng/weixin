@@ -176,7 +176,10 @@ def home(req):
             this_user = user.objects.get(openid = fromUser)
             new_clothes = clothes.objects.create(name = new_name, image_filename = new_filename, user_id = this_user.id)
             reply_content = new_name + '已保存'
-            return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
+            picUrl = image_url_prefix + new_clothes.image_filename
+            Url = 'http://1stloop.com/detail?id=%s' %s (new_clothes.id)
+            return render_to_response('wx_reply_image_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content, 'picUrl': picUrl, 'Url': Url})
+            
         
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -217,6 +220,8 @@ def set_image_text_reply_content(c):
         season = 'not set'
     reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
     return reply_content
+
+def clothes_detail(request):
 
 def test(req):
     print '---> in test'

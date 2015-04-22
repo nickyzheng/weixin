@@ -9,7 +9,7 @@
 			<Title><![CDATA[Clothes]]></Title> 
 			<Description><![CDATA[{{content}}]]></Description>
 			<PicUrl><![CDATA[{{picUrl}}]]></PicUrl>
-			<Url><![CDATA[{{picUrl}}]]></Url>
+			<Url><![CDATA[{{Url}}]]></Url>
 		</item>
 	</Articles>
 </xml> 
