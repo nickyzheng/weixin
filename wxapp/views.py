@@ -221,7 +221,7 @@ def set_image_text_reply_content(c):
     reply_content = image_text_reply_content % (c.name, category, season, c.tag, str(c.choose_count))
     return reply_content
 
-def clothes_detail(request):
+# def clothes_detail(request):
 
 def test(req):
     print '---> in test'
