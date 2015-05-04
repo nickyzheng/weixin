@@ -42,7 +42,6 @@ def get_baidu_link(soup, keywords):
 			msg += item['title'] + '\n'
 			msg += item_baidu + '\n'
 
-	print msg
 	return msg
 
 if __name__ == "__main__":
