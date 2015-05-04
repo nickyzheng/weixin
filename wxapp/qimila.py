@@ -17,33 +17,28 @@ def get_show():
 
 	soup = BeautifulSoup(r.text)
 
-	# for item in soup.find_all('a', title=re.compile(u'少康战情')):
-	# 	print item['title']
-	# 	print item['href']
+	keywords = []
 
-	item1 = soup.find_all('a', title=re.compile(u'少康战情'))[0]
-	item2 = soup.find_all('a', title=re.compile(u'丽文'))[0]
+	keywords.append(u'少康战情')
+	keywords.append(u'丽文')
 
-	if item1:
-		item1_url = main_url + item1['href']
-		print '[+]', item1_url
-		r = requests.get(item1_url)
-		soup = BeautifulSoup(r.text)
-		item1_baidu = soup.find_all('a', href=re.compile(r'pan\.baidu'))[0]['href']
-		print '[+]', 'item1_baidu', item1_baidu
+	return get_baidu_link(soup, keywords)
 
-	if item2:
-		item2_url = main_url + item2['href']
-		print '[+]', item2_url
-		r = requests.get(item2_url)
-		soup = BeautifulSoup(r.text)
-		item2_baidu = soup.find_all('a', href=re.compile(r'pan\.baidu'))[0]['href']
-		print '[+]', 'item2_baidu', item2_baidu
+def get_baidu_link(soup, keywords):
+	main_url = 'http://qimila.net/'
+	msg = ''
 
-	msg = item1['title'] + '\n'
-	msg += item1_baidu + '\n'
-	msg += item2['title'] + '\n'
-	msg += item2_baidu
+	for keyword in keywords:
+		item = soup.find_all('a', title = re.compile(keyword))[0]
+		if item:
+			item_url = main_url + item['href']
+			print '[+]', item_url
+			r = requests.get(item_url)
+			item_soup = BeautifulSoup(r.text)
+			item_baidu = item_soup.find_all('a', href=re.compile(r'pan\.baidu'))[0]['href']
+			print '[+]', item_baidu
+			msg += item['title'] + '\n'
+			msg += item_baidu + '\n'
 
 	return msg
 
