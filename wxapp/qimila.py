@@ -22,7 +22,7 @@ def get_show():
 	# keywords.append(u'文茜')
 	keywords.append(u'少康战情')
 	keywords.append(u'丽文')
-	keywords.append(u'新闻')
+	# keywords.append(u'新闻')
 
 	return get_baidu_link(soup, keywords)
 
