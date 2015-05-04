@@ -19,8 +19,8 @@ def get_show():
 
 	keywords = []
 
-	# keywords.append(u'文茜')
-	keywords.append(u'少康战情')
+	keywords.append(u'文茜')
+	# keywords.append(u'少康战情')
 	# keywords.append(u'丽文')
 
 
