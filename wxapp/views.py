@@ -247,8 +247,9 @@ def test(req):
     logger.info('aaa')
     logger.error('bbb')
 
+    return HttpResponse('success')
 
-    return render_to_response('starter-template.html', {'image_url': 'http://1stloop.com/static/upload/frroo.jpg'})
+    #return render_to_response('starter-template.html', {'image_url': 'http://1stloop.com/static/upload/frroo.jpg'})
 
 ###
 ###
