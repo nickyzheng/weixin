@@ -7,6 +7,7 @@ import lxml
 import time
 import os
 from lxml import etree
+import qimila
 
 ####### TEST ###############
 import datetime
