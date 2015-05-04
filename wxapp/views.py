@@ -165,6 +165,10 @@ def home(req):
             reply_content = u'帮助菜单\nrename 给衣服起个名字\nset cat 设置类型\n  1 - business\n  2 - business casual\n  3 - casual\n  4 - sport\nset sea 设置季节\n  1 - spring and autumn\n  2 - summer\n  3 - winter\nshowcat 按类型查找\nshowsea 按季节查找\nshow 显示衣服\nshowall 列出全部衣服\ntoday cat sea 今天穿什么\ndel 删除\nchoose 今天选这件'
             return render_to_response('wx_reply_text.xml', {'fromUser': toUser, 'toUser': fromUser, 'createTime': int(time.time()), 'content': reply_content})
 
+            p = re.compile(r'q')
+            if p.match(content):
+                pass
+
         if msgType == 'image':
             PicUrl = xml.find("PicUrl").text
             new_filename = ''.join(random.choice(string.lowercase) for x in range(5)) + '.jpg'

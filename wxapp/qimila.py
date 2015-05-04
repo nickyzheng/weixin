@@ -40,5 +40,12 @@ def get_show():
 		item2_baidu = soup.find_all('a', href=re.compile(r'pan\.baidu'))[0]['href']
 		print '[+]', 'item2_baidu', item2_baidu
 
+	msg = item1['title'] + '\n'
+	msg += item1_baidu + '\n'
+	msg += item2['title'] + '\n'
+	msg += item2_baidu
+
+	return msg
+
 if __name__ == "__main__":
 	get_show()
